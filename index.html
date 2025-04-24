@@ -5,361 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3D Models Gallery | 3D_model.co</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* Reset default margin and padding */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary-color: #1caad9;
-      --background-color: #0f0f0f;
-      --card-background: #1a1a1a;
-      --text-color: #fff;
-      --secondary-text: #bbb;
-      --accent-color: #ff4081;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--background-color);
-      color: var(--text-color);
-      line-height: 1.6;
-      padding-top: 60px; /* For fixed header */
-    }
-
-    /* Header Styles */
-    header {
-      background-color: rgba(0, 0, 0, 0.9);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: var(--primary-color);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-    }
-
-    .logo i {
-      margin-right: 8px;
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-    }
-
-    nav ul li {
-      margin-left: 20px;
-    }
-
-    nav ul li a {
-      color: var(--text-color);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    nav ul li a:hover {
-      color: var(--primary-color);
-    }
-
-    .search-bar {
-      position: relative;
-      margin-right: 15px;
-    }
-
-    .search-bar input {
-      padding: 8px 35px 8px 12px;
-      border-radius: 20px;
-      border: none;
-      background-color: #333;
-      color: var(--text-color);
-      width: 200px;
-    }
-
-    .search-bar i {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--secondary-text);
-    }
-
-    /* Main Content Styles */
-    .main-container {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px;
-    }
-
-    .category-title {
-      margin: 30px 0 15px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #333;
-      font-size: 1.8rem;
-      color: var(--primary-color);
-    }
-
-    .category-description {
-      margin-bottom: 20px;
-      color: var(--secondary-text);
-    }
-
-    .model-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 25px;
-      margin-bottom: 40px;
-    }
-
-    .model-card {
-      background-color: var(--card-background);
-      border-radius: 8px;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .model-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    .model-embed {
-      width: 100%;
-      padding-top: 75%; /* 4:3 Aspect ratio */
-      position: relative;
-    }
-
-    .model-embed iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .model-info {
-      padding: 15px;
-    }
-
-    .model-title {
-      font-size: 1.2rem;
-      margin-bottom: 5px;
-      color: var(--primary-color);
-    }
-
-    .attribution {
-      font-size: 14px;
-      color: var(--secondary-text);
-    }
-
-    .attribution a {
-      color: var(--primary-color);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .attribution a:hover {
-      text-decoration: underline;
-    }
-
-    /* Filter Controls */
-    .filters {
-      background-color: var(--card-background);
-      padding: 15px 20px;
-      border-radius: 8px;
-      margin-bottom: 30px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      align-items: center;
-    }
-
-    .filter-label {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-
-    .filter-options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .filter-btn {
-      padding: 8px 15px;
-      background-color: #333;
-      border: none;
-      border-radius: 20px;
-      color: var(--text-color);
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .filter-btn.active {
-      background-color: var(--primary-color);
-    }
-
-    .filter-btn:hover:not(.active) {
-      background-color: #444;
-    }
-
-    /* Footer Styles */
-    footer {
-      background-color: #0a0a0a;
-      padding: 30px 20px;
-      margin-top: 50px;
-      text-align: center;
-    }
-
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-
-    .footer-section {
-      flex: 1;
-      min-width: 250px;
-      margin-bottom: 20px;
-    }
-
-    .footer-title {
-      font-size: 1.2rem;
-      margin-bottom: 15px;
-      color: var(--primary-color);
-    }
-
-    .footer-links a {
-      display: block;
-      color: var(--secondary-text);
-      text-decoration: none;
-      margin-bottom: 8px;
-      transition: color 0.3s;
-    }
-
-    .footer-links a:hover {
-      color: var(--text-color);
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      margin-top: 15px;
-    }
-
-    .social-icons a {
-      color: var(--secondary-text);
-      font-size: 1.5rem;
-      transition: color 0.3s;
-    }
-
-    .social-icons a:hover {
-      color: var(--primary-color);
-    }
-
-    .copyright {
-      margin-top: 30px;
-      color: #666;
-      font-size: 0.9rem;
-      text-align: center;
-      width: 100%;
-    }
-
-    /* Responsive Styles */
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        padding: 10px;
-      }
-
-      .logo {
-        margin-bottom: 10px;
-      }
-
-      .search-and-nav {
-        width: 100%;
-      }
-
-      .search-bar {
-        margin: 10px 0;
-        width: 100%;
-      }
-
-      .search-bar input {
-        width: 100%;
-      }
-
-      nav ul {
-        justify-content: center;
-        margin: 10px 0;
-      }
-
-      nav ul li {
-        margin: 0 10px;
-      }
-
-      .model-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      }
-
-      .filters {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .model-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Loading Animation */
-    .loader {
-      width: 100%;
-      height: 4px;
-      background-color: #333;
-      position: fixed;
-      top: 0;
-      overflow: hidden;
-      z-index: 1001;
-    }
-
-    .loader:before {
-      content: "";
-      position: absolute;
-      background-color: var(--primary-color);
-      height: 4px;
-      width: 30%;
-      animation: loading 2s infinite ease-in-out;
-    }
-
-    @keyframes loading {
-      0% { left: -30%; }
-      50% { left: 100%; }
-      100% { left: -30%; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="loader" id="loader"></div>
@@ -378,6 +24,7 @@
           <li><a href="#raspberry-pi">Raspberry Pi</a></li>
           <li><a href="#vehicles">Vehicles</a></li>
           <li><a href="#misc">Misc Models</a></li>
+          <li><a href="#polycam">Polycam</a></li>
           <li><a href="#about">About</a></li>
         </ul>
       </nav>
@@ -393,6 +40,7 @@
           <button class="filter-btn" data-filter="raspberry-pi">Raspberry Pi</button>
           <button class="filter-btn" data-filter="vehicles">Vehicles</button>
           <button class="filter-btn" data-filter="misc">Misc</button>
+          <button class="filter-btn" data-filter="polycam">Polycam</button>
         </div>
       </div>
       
@@ -405,7 +53,7 @@
       </div>
     </div>
 
-    <section id="raspberry-pi">
+    <section id="raspberry-pi" class="reveal">
       <h2 class="category-title">Raspberry Pi Models</h2>
       <p class="category-description">Explore detailed 3D models of various Raspberry Pi boards, from the full-sized Pi 4 to the compact Pi Zero.</p>
       
@@ -417,6 +65,11 @@
           </div>
           <div class="model-info">
             <h3 class="model-title">Raspberry Pi 4 V1</h3>
+            <p class="model-description">Detailed model of the Raspberry Pi 4 board.</p>
+            <div class="model-tags">
+              <span class="tag">Pi 4</span>
+              <span class="tag">Electronics</span>
+            </div>
             <div class="attribution">
               <p>By <a href="https://sketchfab.com/Movieboxc17?utm_medium=embed&utm_campaign=share-popup&utm_content=dc123b68a6544ca3aacad88e11a68387" target="_blank" rel="nofollow">Movieboxc17</a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=dc123b68a6544ca3aacad88e11a68387" target="_blank" rel="nofollow">Sketchfab</a></p>
             </div>
@@ -430,6 +83,11 @@
           </div>
           <div class="model-info">
             <h3 class="model-title">Raspberry Pi 4 V2</h3>
+            <p class="model-description">Second version of the Raspberry Pi 4 model with improved textures.</p>
+            <div class="model-tags">
+              <span class="tag">Pi 4</span>
+              <span class="tag">V2</span>
+            </div>
             <div class="attribution">
               <p>By <a href="https://sketchfab.com/Movieboxc17?utm_medium=embed&utm_campaign=share-popup&utm_content=a55c96b9c1aa4618b4bf182718513bf2" target="_blank" rel="nofollow">Movieboxc17
               </a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=a55c96b9c1aa4618b4bf182718513bf2" target="_blank" rel="nofollow">Sketchfab</a></p>
@@ -444,6 +102,11 @@
           </div>
           <div class="model-info">
             <h3 class="model-title">Raspberry Pi 5 V1</h3>
+            <p class="model-description">3D model of the latest Raspberry Pi 5 board.</p>
+            <div class="model-tags">
+              <span class="tag">Pi 5</span>
+              <span class="tag">New</span>
+            </div>
             <div class="attribution">
               <p>By <a href="https://sketchfab.com/Movieboxc17?utm_medium=embed&utm_campaign=share-popup&utm_content=ad3d7a23292d48db830f97983577e0c5" target="_blank" rel="nofollow">Movieboxc17</a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=ad3d7a23292d48db830f97983577e0c5" target="_blank" rel="nofollow">Sketchfab</a></p>
             </div>
@@ -457,6 +120,11 @@
           </div>
           <div class="model-info">
             <h3 class="model-title">Raspberry Pi Zero W</h3>
+            <p class="model-description">Compact Raspberry Pi Zero W with built-in WiFi.</p>
+            <div class="model-tags">
+              <span class="tag">Pi Zero</span>
+              <span class="tag">WiFi</span>
+            </div>
             <div class="attribution">
               <p>By <a href="https://sketchfab.com/Movieboxc17?utm_medium=embed&utm_campaign=share-popup&utm_content=fe63598141244d2984879fe2f03a9aeb" target="_blank" rel="nofollow">Movieboxc17</a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=fe63598141244d2984879fe2f03a9aeb" target="_blank" rel="nofollow">Sketchfab</a></p>
             </div>
@@ -470,6 +138,11 @@
           </div>
           <div class="model-info">
             <h3 class="model-title">Raspberry Pi Zero W V2</h3>
+            <p class="model-description">Updated model of the Raspberry Pi Zero W with enhanced details.</p>
+            <div class="model-tags">
+              <span class="tag">Pi Zero</span>
+              <span class="tag">V2</span>
+            </div>
             <div class="attribution">
               <p>By <a href="https://sketchfab.com/Movieboxc17?utm_medium=embed&utm_campaign=share-popup&utm_content=da36606f4f07463f86c291269c66f4f1" target="_blank" rel="nofollow">Movieboxc17</a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=da36606f4f07463f86c291269c66f4f1" target="_blank" rel="nofollow">Sketchfab</a></p>
             </div>
@@ -478,7 +151,7 @@
       </div>
     </section>
     
-    <section id="vehicles">
+    <section id="vehicles" class="reveal">
       <h2 class="category-title">Vehicles</h2>
       <p class="category-description">Check out these detailed vehicle models with realistic textures and designs.</p>
       
@@ -490,6 +163,11 @@
           </div>
           <div class="model-info">
             <h3 class="model-title">Car v2</h3>
+            <p class="model-description">Detailed 3D model of a modern car with interior details.</p>
+            <div class="model-tags">
+              <span class="tag">Vehicle</span>
+              <span class="tag">Sport</span>
+            </div>
             <div class="attribution">
               <p>By <a href="https://sketchfab.com/Movieboxc17?utm_medium=embed&utm_campaign=share-popup&utm_content=3d64fa30dfc84fa880cf2d0a4e3ce3d8" target="_blank" rel="nofollow">Movieboxc17</a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=3d64fa30dfc84fa880cf2d0a4e3ce3d8" target="_blank" rel="nofollow">Sketchfab</a></p>
             </div>
@@ -503,6 +181,11 @@
           </div>
           <div class="model-info">
             <h3 class="model-title">Car</h3>
+            <p class="model-description">Original car model with realistic exterior finish.</p>
+            <div class="model-tags">
+              <span class="tag">Vehicle</span>
+              <span class="tag">Sedan</span>
+            </div>
             <div class="attribution">
               <p>By <a href="https://sketchfab.com/Movieboxc17?utm_medium=embed&utm_campaign=share-popup&utm_content=832cd14958544758b996896626b63ce2" target="_blank" rel="nofollow">Movieboxc17</a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=832cd14958544758b996896626b63ce2" target="_blank" rel="nofollow">Sketchfab</a></p>
             </div>
@@ -511,10 +194,10 @@
       </div>
     </section>
     
-    <section id="misc">
+    <section id="misc" class="reveal">
       <h2 class="category-title">Miscellaneous Models</h2>
       <p class="category-description">Explore various other 3D models including maps, experimental designs, and more.</p>
-      
+
       <div class="model-grid">
         <!-- Dh -->
         <div class="model-card" data-category="misc">
@@ -523,6 +206,11 @@
           </div>
           <div class="model-info">
             <h3 class="model-title">Dh</h3>
+            <p class="model-description">Experimental 3D design with unique geometric features.</p>
+            <div class="model-tags">
+              <span class="tag">Design</span>
+              <span class="tag">Art</span>
+            </div>
             <div class="attribution">
               <p>By <a href="https://sketchfab.com/Movieboxc17?utm_medium=embed&utm_campaign=share-popup&utm_content=c97cc2e5000b47c1b3b441908deb8af3" target="_blank" rel="nofollow">Movieboxc17</a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=c97cc2e5000b47c1b3b441908deb8af3" target="_blank" rel="nofollow">Sketchfab</a></p>
             </div>
@@ -536,6 +224,11 @@
           </div>
           <div class="model-info">
             <h3 class="model-title">Test74</h3>
+            <p class="model-description">Concept 3D model created as an experimental design test.</p>
+            <div class="model-tags">
+              <span class="tag">Concept</span>
+              <span class="tag">Experimental</span>
+            </div>
             <div class="attribution">
               <p>By <a href="https://sketchfab.com/Movieboxc17?utm_medium=embed&utm_campaign=share-popup&utm_content=f4700c34ee7a4c27acfbd300446722ec" target="_blank" rel="nofollow">Movieboxc17</a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=f4700c34ee7a4c27acfbd300446722ec" target="_blank" rel="nofollow">Sketchfab</a></p>
             </div>
@@ -549,6 +242,11 @@
           </div>
           <div class="model-info">
             <h3 class="model-title">Mapp 2.420</h3>
+            <p class="model-description">Detailed 3D map with terrain features and landmarks.</p>
+            <div class="model-tags">
+              <span class="tag">Map</span>
+              <span class="tag">Terrain</span>
+            </div>
             <div class="attribution">
               <p>By <a href="https://sketchfab.com/Askansz?utm_medium=embed&utm_campaign=share-popup&utm_content=74209a4925874978908db63ac10740fb" target="_blank" rel="nofollow">Askansz</a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=74209a4925874978908db63ac10740fb" target="_blank" rel="nofollow">Sketchfab</a></p>
             </div>
@@ -557,11 +255,62 @@
       </div>
     </section>
     
-    <section id="about" class="about-section">
+    <!-- Updated Polycam Section -->
+    <section id="polycam" class="reveal">
+      <h2 class="category-title">Polycam Scans</h2>
+      <p class="category-description">Explore highly detailed 3D models captured with Polycam's advanced scanning technology.</p>
+      
+      <div class="model-grid" id="polycam-models">
+        <!-- New Polycam scan -->
+        <div class="model-card featured-model" data-category="polycam">
+          <div class="model-embed">
+            <iframe src="https://poly.cam/capture/318fabed-7150-49a9-949e-5bb8eab4d66b/embed" title="Polycam capture viewer" frameborder="0"></iframe>
+          </div>
+          <div class="model-info">
+            <h3 class="model-title">Object Scan</h3>
+            <p class="model-description">High-resolution 3D scan captured with Polycam's LiDAR technology</p>
+            <div class="model-tags">
+              <span class="tag">Featured</span>
+              <span class="tag">LiDAR</span>
+              <span class="tag">High Detail</span>
+            </div>
+            <div class="attribution">
+              <p>Via <a href="https://poly.cam" target="_blank" rel="nofollow">Polycam</a></p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sample Polycam model -->
+        <div class="model-card" data-category="polycam">
+          <div class="model-embed">
+            <iframe title="Polycam Garden Sculpture" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/4a0acf1c90be49e8a7c891c330adf835/embed"></iframe>
+          </div>
+          <div class="model-info">
+            <h3 class="model-title">Garden Sculpture Scan</h3>
+            <p class="model-description">3D model captured with Polycam app on iPhone 13 Pro</p>
+            <div class="model-tags">
+              <span class="tag">Outdoor</span>
+              <span class="tag">Sculpture</span>
+            </div>
+            <div class="attribution">
+              <p>By <a href="#" target="_blank" rel="nofollow">PolycamUser</a> via <a href="https://poly.cam" target="_blank" rel="nofollow">Polycam</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="about" class="about-section reveal">
       <h2 class="category-title">About 3D_model.co</h2>
       <div class="model-card" style="padding: 20px; max-width: 800px; margin: 0 auto;">
-        <p>3D_model.co is a curated gallery of high-quality 3D models for enthusiasts, designers, and developers. We showcase various models from talented creators on Sketchfab.</p>
-        <p style="margin-top: 15px;">All models are embedded from Sketchfab and proper attribution is provided to the original creators. If you are a creator and want your work featured on our site, please contact us.</p>
+        <p>3D_model.co is a curated gallery of high-quality 3D models for enthusiasts, designers, and developers. We showcase various models from talented creators on Sketchfab and now feature Polycam-captured 3D scans as well.</p>
+        <p style="margin-top: 15px;">All models are embedded from their original sources and proper attribution is provided to the original creators. Our gallery continues to grow as we discover new and interesting 3D content worth sharing with our community.</p>
+        <div class="model-tags" style="margin-top: 20px;">
+          <span class="tag">3D Models</span>
+          <span class="tag">Gallery</span>
+          <span class="tag">Sketchfab</span>
+          <span class="tag">Polycam</span>
+        </div>
       </div>
     </section>
   </div>
@@ -572,7 +321,7 @@
         <h3 class="footer-title">3D_model.co</h3>
         <p>Your premier destination for exploring high-quality 3D models from talented creators around the world.</p>
         <div class="social-icons">
-          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="https://github.com/PixelHeaven" target="_blank"><i class="fab fa-github"></i></a>
         </div>
       </div>
       
@@ -582,6 +331,7 @@
           <a href="#raspberry-pi">Raspberry Pi Models</a>
           <a href="#vehicles">Vehicle Models</a>
           <a href="#misc">Miscellaneous Models</a>
+          <a href="#polycam">Polycam Models</a>
           <a href="#about">About Us</a>
         </div>
       </div>
@@ -594,148 +344,12 @@
       </div>
       
       <div class="copyright">
-        <p>&copy; 2023 PixelHeaven - All Rights Reserved</p>
+        <p>© 2025 PixelHeaven - All Rights Reserved</p>
       </div>
     </div>
   </footer>
 
-  <script>
-    // Show/hide loader
-    document.addEventListener('DOMContentLoaded', function() {
-      // Hide loader after page loads
-      setTimeout(function() {
-        document.getElementById('loader').style.display = 'none';
-      }, 1000);
-      
-            // Filter functionality
-            const filterButtons = document.querySelectorAll('.filter-btn[data-filter]');
-      const sortButtons = document.querySelectorAll('.filter-btn[data-sort]');
-      const modelCards = document.querySelectorAll('.model-card');
-      const searchInput = document.getElementById('search-input');
-      
-      // Filter by category
-      filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          // Update active button
-          filterButtons.forEach(btn => btn.classList.remove('active'));
-          this.classList.add('active');
-          
-          const filterValue = this.getAttribute('data-filter');
-          
-          modelCards.forEach(card => {
-            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-              card.style.display = '';
-            } else {
-              card.style.display = 'none';
-            }
-          });
-        });
-      });
-      
-      // Sort functionality
-      sortButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          // Update active button
-          sortButtons.forEach(btn => btn.classList.remove('active'));
-          this.classList.add('active');
-          
-          const sortValue = this.getAttribute('data-sort');
-          const grids = document.querySelectorAll('.model-grid');
-          
-          grids.forEach(grid => {
-            const items = Array.from(grid.children);
-            
-            if (sortValue === 'name') {
-              items.sort((a, b) => {
-                const titleA = a.querySelector('.model-title').textContent.trim().toLowerCase();
-                const titleB = b.querySelector('.model-title').textContent.trim().toLowerCase();
-                return titleA.localeCompare(titleB);
-              });
-            } else {
-              // Default order (original DOM order)
-              items.sort((a, b) => {
-                return Array.from(grid.children).indexOf(a) - Array.from(grid.children).indexOf(b);
-              });
-            }
-            
-            // Remove all items
-            items.forEach(item => grid.removeChild(item));
-            
-            // Add sorted items
-            items.forEach(item => grid.appendChild(item));
-          });
-        });
-      });
-      
-      // Search functionality
-      searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase().trim();
-        
-        modelCards.forEach(card => {
-          const title = card.querySelector('.model-title').textContent.toLowerCase();
-          const attribution = card.querySelector('.attribution').textContent.toLowerCase();
-          
-          if (title.includes(searchTerm) || attribution.includes(searchTerm)) {
-            card.style.display = '';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-      
-      // Lazy loading for iframes
-      function lazyLoadIframes() {
-        const iframes = document.querySelectorAll('iframe');
-        
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              // Load the iframe only when it's in viewport
-              const iframe = entry.target;
-              if (iframe.dataset.src) {
-                iframe.src = iframe.dataset.src;
-                iframe.removeAttribute('data-src');
-              }
-              // Stop observing once loaded
-              observer.unobserve(iframe);
-            }
-          });
-        }, { threshold: 0.1 });
-        
-        iframes.forEach(iframe => {
-          // Replace actual src with data-src
-          if (!iframe.dataset.src) {
-            iframe.dataset.src = iframe.src;
-            iframe.src = 'about:blank';
-          }
-          observer.observe(iframe);
-        });
-      }
-      
-      // Initialize lazy loading
-      lazyLoadIframes();
-      
-      // Smooth scrolling for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          const targetId = this.getAttribute('href');
-          if (targetId === '#') return;
-          
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) {
-            const headerHeight = document.querySelector('header').offsetHeight;
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-            
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
-          }
-        });
-      });
-    });
-  </script>
+  <!-- Reference to external JavaScript file -->
+  <script src="script.js"></script>
 </body>
 </html>
